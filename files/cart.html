@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart — Desk Theory</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-icon.png" alt="Desk Theory"><span class="logo-word">Desk Theory</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link active">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" style="padding-top:50px;">
+  <div class="container">
+    <span class="eyebrow">Review your order</span>
+    <h1 style="font-size:clamp(2rem,5vw,3rem); margin-bottom:30px;">Your Cart</h1>
+    <div id="cart-content"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 Desk Theory — student project</span>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const shipping = 49;
+
+  function render() {
+    const cart = getCart();
+    const ids = Object.keys(cart);
+    const container = document.getElementById("cart-content");
+
+    if (ids.length === 0) {
+      container.innerHTML = `
+        <div class="empty-cart">
+          <p style="font-size:1.1rem; font-weight:700;">Your cart is empty.</p>
+          <p class="center-note" style="margin:8px 0 22px;">Nothing peeled off the shelf yet.</p>
+          <a href="shop.html" class="btn">Browse the shop</a>
+        </div>`;
+      return;
+    }
+
+    let rows = "";
+    ids.forEach(id => {
+      const p = getProduct(id);
+      if (!p) return;
+      const qty = cart[id];
+      rows += `
+        <tr>
+          <td class="cart-item-name">${p.name}<br><span style="opacity:0.6; font-size:0.72rem; text-transform:uppercase;">${p.category}</span></td>
+          <td>₹${p.price}</td>
+          <td>
+            <div class="qty-control">
+              <button data-dec="${id}">–</button>
+              <span>${qty}</span>
+              <button data-inc="${id}">+</button>
+            </div>
+          </td>
+          <td>₹${p.price * qty}</td>
+          <td><button class="remove-link" data-remove="${id}">Remove</button></td>
+        </tr>`;
+    });
+
+    const subtotal = cartTotal();
+    const total = subtotal + shipping;
+
+    container.innerHTML = `
+      <table class="cart-table">
+        <thead>
+          <tr><th>Item</th><th>Price</th><th>Qty</th><th>Subtotal</th><th></th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div class="cart-summary">
+        <div class="cart-summary-box">
+          <div class="row"><span>Subtotal</span><span>₹${subtotal}</span></div>
+          <div class="row"><span>Shipping</span><span>₹${shipping}</span></div>
+          <div class="row total"><span>Total</span><span>₹${total}</span></div>
+          <a href="contact.html" class="btn" style="margin-top:16px; width:100%; text-align:center; box-sizing:border-box;">Checkout</a>
+        </div>
+      </div>
+    `;
+  }
+
+  render();
+
+  document.addEventListener("click", (e) => {
+    const d = e.target.dataset;
+    if (d.inc) { setQty(d.inc, getCart()[d.inc] + 1); render(); }
+    if (d.dec) { setQty(d.dec, getCart()[d.dec] - 1); render(); }
+    if (d.remove) { removeFromCart(d.remove); render(); }
+  });
+</script>
+</body>
+</html>

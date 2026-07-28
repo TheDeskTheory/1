@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Desk Theory</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-icon.png" alt="Desk Theory"><span class="logo-word">Desk Theory</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" style="padding-top:50px; border-bottom:3px solid var(--ink);">
+  <div class="container">
+    <span class="eyebrow">Full catalog</span>
+    <h1 style="font-size:clamp(2rem,5vw,3rem);">The Shop</h1>
+    <p style="max-width:480px; margin-top:12px;">Twelve pieces, three formats. Filter below to browse by category.</p>
+    <div class="category-nav" style="margin-top:26px;">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="posters">Posters</button>
+      <button data-filter="bookmarks">Bookmarks</button>
+      <button data-filter="stickers">Stickers</button>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid" id="shop-grid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 Desk Theory — student project</span>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const grid = document.getElementById("shop-grid");
+
+  function renderCard(p) {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.dataset.cat = p.category;
+    card.style.setProperty("--rot", p.rot + "deg");
+    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
+    card.innerHTML = `
+      <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
+        <span class="glyph">${glyph}</span>
+        <div class="peel"></div>
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="product-row">
+          <span class="price">₹${p.price}</span>
+          <button class="btn small" data-add="${p.id}">Add</button>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  function draw(filter) {
+    grid.innerHTML = "";
+    PRODUCTS
+      .filter(p => filter === "all" || p.category === filter)
+      .forEach(p => grid.appendChild(renderCard(p)));
+  }
+
+  draw("all");
+
+  document.querySelectorAll(".category-nav button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".category-nav button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      draw(btn.dataset.filter);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.dataset && e.target.dataset.add) {
+      addToCart(e.target.dataset.add);
+      e.target.textContent = "Added";
+      setTimeout(() => (e.target.textContent = "Add"), 900);
+    }
+  });
+</script>
+</body>
+</html>
