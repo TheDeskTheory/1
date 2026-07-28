@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Loose Leaf Press</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">Loose Leaf<span>Loose Leaf</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+    <span class="eyebrow">Get in touch</span>
+    <h1 style="font-size:clamp(2rem,5vw,3rem);">Contact & Checkout</h1>
+    <p style="max-width:480px; margin-top:12px; margin-bottom:36px;">This is a class project, so orders aren't real — but the form below works and shows what a checkout step could look like.</p>
+
+    <form class="form-grid" id="contact-form">
+      <div>
+        <label for="name">Full name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div>
+        <label for="address">Shipping address</label>
+        <textarea id="address" rows="3" required></textarea>
+      </div>
+      <div>
+        <label for="message">Note (optional)</label>
+        <textarea id="message" rows="2"></textarea>
+      </div>
+      <button type="submit" class="btn">Submit order</button>
+    </form>
+
+    <p id="confirm-msg" style="display:none; margin-top:20px; font-weight:700; color:var(--riso-green);">Thanks! Your order details have been noted — this is a demo, so no real order was placed.</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 Loose Leaf Press — student project</span>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  document.getElementById("contact-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    document.getElementById("confirm-msg").style.display = "block";
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

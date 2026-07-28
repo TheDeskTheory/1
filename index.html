@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loose Leaf Press — Posters, Bookmarks & Stickers</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo">Loose Leaf<span>Loose Leaf</span></a>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-riso-title">
+      <span class="layer pink">Print Small.</span>
+      <span class="layer blue">Print Small.</span>
+      <span class="layer ink">Print Small.</span>
+    </div>
+    <p class="hero-sub">Posters, bookmarks, and stickers designed in small batches and run on a riso press. No warehouses, no minimums — just paper goods worth keeping.</p>
+    <div class="hero-meta">
+      <span class="tag pink">Posters</span>
+      <span class="tag blue">Bookmarks</span>
+      <span class="tag yellow">Stickers</span>
+    </div>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="shop.html" class="btn">Shop the drop</a>
+      <a href="about.html" class="btn secondary">Our story</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Fresh off the press</span>
+        <h2>Featured pieces</h2>
+      </div>
+      <a href="shop.html" class="btn small">View all</a>
+    </div>
+    <div class="grid" id="featured-grid"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container values-grid">
+    <div class="value-block">
+      <h3>Small batches</h3>
+      <p>Every design is run in limited quantities — once it's gone, it's gone.</p>
+    </div>
+    <div class="value-block">
+      <h3>Riso-inspired color</h3>
+      <p>Layered duotone prints for texture you won't get from a laser printer.</p>
+    </div>
+    <div class="value-block">
+      <h3>Made to last</h3>
+      <p>Weatherproof stickers, matte-laminate bookmarks, archival poster stock.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 Loose Leaf Press — student project</span>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const featuredIds = ["p4", "p1", "p9", "p6"];
+  const grid = document.getElementById("featured-grid");
+  featuredIds.forEach(id => {
+    const p = getProduct(id);
+    grid.appendChild(renderCard(p));
+  });
+
+  function renderCard(p) {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.dataset.cat = p.category;
+    card.style.setProperty("--rot", p.rot + "deg");
+    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
+    card.innerHTML = `
+      <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
+        <span class="glyph">${glyph}</span>
+        <div class="peel"></div>
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="product-row">
+          <span class="price">₹${p.price}</span>
+          <button class="btn small" data-add="${p.id}">Add</button>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.target.dataset && e.target.dataset.add) {
+      addToCart(e.target.dataset.add);
+      e.target.textContent = "Added";
+      setTimeout(() => (e.target.textContent = "Add"), 900);
+    }
+  });
+</script>
+</body>
+</html>
