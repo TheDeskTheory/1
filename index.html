@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Desk Theory — Posters, Bookmarks & Stickers</title>
+<title>The Desk Theory — Posters, Bookmarks & Stickers</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="site-header">
   <div class="container">
-    <a href="index.html" class="logo"><img src="logo-icon.png" alt="Desk Theory"><span class="logo-word">Desk Theory</span></a>
+    <a href="index.html" class="logo"><img src="logo-badge-tight.png" alt="The Desk Theory"><span class="logo-word">The Desk Theory</span></a>
     <nav class="main-nav">
       <a href="index.html" class="active">Home</a>
       <a href="shop.html">Shop</a>
@@ -26,11 +26,12 @@
     <span class="eyebrow">Art for every corner</span>
     <h1>Small pieces of art<br>for every corner of your day.</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Posters, bookmarks, and stickers designed in small batches. No warehouses, no minimums — just paper goods worth keeping on your desk.</p>
+    <p class="hero-sub">Posters, bookmarks, stickers, and art prints designed in small batches — for the ones who notice the details.</p>
     <div class="hero-meta">
       <span class="tag pink">Posters</span>
       <span class="tag blue">Bookmarks</span>
       <span class="tag yellow">Stickers</span>
+      <span class="tag pink">Art Prints</span>
     </div>
     <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
       <a href="shop.html" class="btn">Shop the collection</a>
@@ -71,7 +72,7 @@
 
 <footer class="site-footer">
   <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
-    <span>&copy; 2026 Desk Theory — student project</span>
+    <span>&copy; 2026 The Desk Theory — student project</span>
     <span>Made for our BBA group assignment</span>
   </div>
 </footer>
@@ -91,7 +92,7 @@
     card.className = "product-card";
     card.dataset.cat = p.category;
     card.style.setProperty("--rot", p.rot + "deg");
-    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
+    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : p.category === "art-prints" ? "A" : "S";
     card.innerHTML = `
       <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
         <span class="glyph">${glyph}</span>
