@@ -238,11 +238,11 @@ nav.main-nav a.active {
 .section:last-child { border-bottom: none; }
 
 .eyebrow {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 0.75rem;
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--tan-dark);
   margin-bottom: 10px;
   display: block;
@@ -290,8 +290,7 @@ nav.main-nav a.active {
   box-shadow: 0 10px 24px rgba(237,228,214,0.12);
 }
 
-.product-card[data-cat="posters"] .sticker-art { aspect-ratio: 3 / 4; }
-.product-card[data-cat="bookmarks"] .sticker-art { aspect-ratio: 1 / 3; }
+/* All product photos now share the same square aspect ratio */
 
 .sticker-art .glyph {
   font-family: 'Playfair Display', serif;
@@ -300,7 +299,6 @@ nav.main-nav a.active {
   opacity: 0.9;
 }
 
-.product-card[data-cat="bookmarks"] .sticker-art .glyph { font-size: 1.3rem; }
 
 .peel { display: none; }
 
