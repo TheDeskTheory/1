@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — The Desk Theory</title>
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mark-v2.png" alt="The Desk Theory"><span class="logo-word">The Desk Theory</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" style="padding-top:50px;">
+  <div class="container">
+    <span class="eyebrow">Almost there</span>
+    <h1 style="font-size:clamp(2rem,5vw,3rem); margin-bottom:30px;">Checkout</h1>
+    <div id="checkout-content"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 The Desk Theory — student project</span>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const shipping = STORE_CONFIG.shipping;
+  const container = document.getElementById("checkout-content");
+
+  function buildUpiString(amount, note) {
+    const params = new URLSearchParams({
+      pa: STORE_CONFIG.upiId,
+      pn: STORE_CONFIG.payeeName,
+      am: amount,
+      cu: "INR",
+      tn: note,
+    });
+    return "upi://pay?" + params.toString();
+  }
+
+  function makeOrderId() {
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    return "DT" + Date.now().toString().slice(-6) + rand;
+  }
+
+  function renderEmpty() {
+    container.innerHTML = `
+      <div class="empty-cart">
+        <p style="font-size:1.1rem; font-weight:700;">Your cart is empty.</p>
+        <p class="center-note" style="margin:8px 0 22px;">Add something before checking out.</p>
+        <a href="shop.html" class="btn">Browse the shop</a>
+      </div>`;
+  }
+
+  function renderForm() {
+    const cart = getCart();
+    const ids = Object.keys(cart);
+    if (ids.length === 0) return renderEmpty();
+
+    const subtotal = cartTotal();
+    const total = subtotal + shipping;
+    const itemsSummary = ids.map(id => {
+      const p = getProduct(id);
+      return p ? `${p.name} x${cart[id]}` : "";
+    }).filter(Boolean).join(", ");
+
+    container.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:50px; align-items:start;">
+        <div>
+          <h2 style="font-size:1.3rem; margin-bottom:18px;">Your details</h2>
+          <form class="form-grid" id="checkout-form">
+            <div>
+              <label for="name">Full name</label>
+              <input type="text" id="name" required>
+            </div>
+            <div>
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" required>
+            </div>
+            <div>
+              <label for="address">Shipping address</label>
+              <textarea id="address" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn" id="submit-btn">Place order — ₹${total}</button>
+          </form>
+        </div>
+        <div>
+          <div class="cart-summary-box" style="width:100%;">
+            <h2 style="font-size:1.1rem; margin-bottom:14px;">Order summary</h2>
+            <div class="row"><span>Subtotal</span><span>₹${subtotal}</span></div>
+            <div class="row"><span>Shipping</span><span>₹${shipping}</span></div>
+            <div class="row total"><span>Total</span><span>₹${total}</span></div>
+            <p class="center-note" style="text-align:left; margin-top:14px;">${itemsSummary}</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("checkout-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitOrder(total, itemsSummary);
+    });
+  }
+
+  function submitOrder(total, itemsSummary) {
+    const btn = document.getElementById("submit-btn");
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!name || !phone || !address) return;
+
+    const orderId = makeOrderId();
+    btn.textContent = "Placing order...";
+    btn.disabled = true;
+
+    const payload = {
+      orderId,
+      name,
+      phone,
+      address,
+      items: itemsSummary,
+      total,
+    };
+
+    const finish = () => {
+      saveCart({});
+      renderConfirmation(orderId, total);
+    };
+
+    if (!STORE_CONFIG.sheetWebhookUrl || STORE_CONFIG.sheetWebhookUrl.startsWith("PASTE")) {
+      // Sheet not connected yet — still let the order flow complete locally
+      finish();
+      return;
+    }
+
+    fetch(STORE_CONFIG.sheetWebhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    })
+      .then(finish)
+      .catch(finish);
+  }
+
+  function renderConfirmation(orderId, total) {
+    const upiReady = STORE_CONFIG.upiId && !STORE_CONFIG.upiId.startsWith("PASTE");
+    const waReady = STORE_CONFIG.whatsappNumber && !STORE_CONFIG.whatsappNumber.startsWith("PASTE");
+    const upiLink = upiReady ? buildUpiString(total, "Order " + orderId) : "";
+    const qrSrc = upiReady
+      ? "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" + encodeURIComponent(upiLink)
+      : "";
+    const waLink = waReady
+      ? "https://wa.me/" + STORE_CONFIG.whatsappNumber + "?text=" + encodeURIComponent(`Hi! I just placed order ${orderId} for ₹${total}. Sharing my payment screenshot.`)
+      : "";
+
+    container.innerHTML = `
+      <div style="max-width:520px;">
+        <h2 style="font-size:1.5rem; margin-bottom:8px;">Order placed — ${orderId}</h2>
+        <p class="center-note" style="text-align:left; margin-bottom:26px;">Now complete payment of <strong>₹${total}</strong> via UPI to confirm your order.</p>
+
+        ${upiReady ? `
+          <div style="border:1px solid var(--line); padding:24px; text-align:center; margin-bottom:20px;">
+            <img src="${qrSrc}" alt="UPI QR code" style="width:200px; height:200px;">
+            <p style="margin-top:14px; font-size:0.85rem;">Scan with any UPI app, or</p>
+            <a href="${upiLink}" class="btn small" style="margin-top:8px;">Pay ₹${total} now</a>
+            <p class="center-note" style="margin-top:10px;">UPI ID: ${STORE_CONFIG.upiId}</p>
+          </div>
+        ` : `
+          <div style="border:1px solid var(--line); padding:20px; margin-bottom:20px;">
+            <p style="font-size:0.85rem;">Payment setup is still being finalized — we'll reach out with payment details shortly.</p>
+          </div>
+        `}
+
+        ${waReady ? `
+          <a href="${waLink}" target="_blank" class="btn secondary" style="width:100%; text-align:center; box-sizing:border-box; margin-bottom:12px;">Send payment screenshot on WhatsApp</a>
+        ` : ""}
+
+        <a href="shop.html" class="btn secondary" style="width:100%; text-align:center; box-sizing:border-box;">Continue shopping</a>
+      </div>
+    `;
+  }
+
+  renderForm();
+</script>
+</body>
+</html>

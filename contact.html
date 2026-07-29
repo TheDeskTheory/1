@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — The Desk Theory</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -24,8 +24,8 @@
 <section class="section" style="padding-top:60px;">
   <div class="container">
     <span class="eyebrow">Get in touch</span>
-    <h1 style="font-size:clamp(2rem,5vw,3rem);">Contact & Checkout</h1>
-    <p style="max-width:480px; margin-top:12px; margin-bottom:36px;">This is a class project, so orders aren't real — but the form below works and shows what a checkout step could look like.</p>
+    <h1 style="font-size:clamp(2rem,5vw,3rem);">Contact Us</h1>
+    <p style="max-width:480px; margin-top:12px; margin-bottom:36px;">Questions about an order, bulk requests, or just want to say hi — reach out here or on WhatsApp.</p>
 
     <form class="form-grid" id="contact-form">
       <div>
@@ -37,17 +37,13 @@
         <input type="email" id="email" required>
       </div>
       <div>
-        <label for="address">Shipping address</label>
-        <textarea id="address" rows="3" required></textarea>
+        <label for="message">Message</label>
+        <textarea id="message" rows="4" required></textarea>
       </div>
-      <div>
-        <label for="message">Note (optional)</label>
-        <textarea id="message" rows="2"></textarea>
-      </div>
-      <button type="submit" class="btn">Submit order</button>
+      <button type="submit" class="btn">Send message</button>
     </form>
 
-    <p id="confirm-msg" style="display:none; margin-top:20px; font-weight:700; color:var(--riso-green);">Thanks! Your order details have been noted — this is a demo, so no real order was placed.</p>
+    <p id="confirm-msg" style="display:none; margin-top:20px; font-weight:700; color:var(--sage-light);">Thanks — we'll get back to you soon. For faster replies on order-related questions, WhatsApp us directly.</p>
   </div>
 </section>
 
