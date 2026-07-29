@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Jost:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Jost:wght@400;500&family=Special+Elite&display=swap');
 
 :root {
   --ink: #E4D8C9;
@@ -87,8 +87,8 @@ a { color: inherit; }
 
 .logo-word {
   font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  letter-spacing: 0.18em;
+  font-size: 1.65rem;
+  letter-spacing: 0.16em;
   font-weight: 600;
 }
 
@@ -99,9 +99,11 @@ nav.main-nav {
 }
 
 nav.main-nav a {
+  font-family: 'Special Elite', cursive;
   text-decoration: none;
-  font-size: 0.72rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   padding-bottom: 3px;
   border-bottom: 1px solid transparent;
   transition: border-color 0.15s ease, color 0.15s ease;
