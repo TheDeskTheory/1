@@ -176,14 +176,14 @@
         <p class="center-note" style="text-align:left; margin-bottom:26px;">Now complete payment of <strong>₹${total}</strong> via UPI to confirm your order.</p>
 
         ${upiReady ? `
-          <div style="border:1px solid var(--line); padding:24px; text-align:center; margin-bottom:20px;">
-            <img src="${qrSrc}" alt="UPI QR code" style="width:200px; height:200px;">
+          <div style="border:1px solid var(--line); border-radius:12px; padding:24px; text-align:center; margin-bottom:20px;">
+            <img src="${qrSrc}" alt="UPI QR code" style="width:200px; height:200px; border-radius:8px;">
             <p style="margin-top:14px; font-size:0.85rem;">Scan with any UPI app, or</p>
             <a href="${upiLink}" class="btn small" style="margin-top:8px;">Pay ₹${total} now</a>
             <p class="center-note" style="margin-top:10px;">UPI ID: ${STORE_CONFIG.upiId}</p>
           </div>
         ` : `
-          <div style="border:1px solid var(--line); padding:20px; margin-bottom:20px;">
+          <div style="border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:20px;">
             <p style="font-size:0.85rem;">Payment setup is still being finalized — we'll reach out with payment details shortly.</p>
           </div>
         `}

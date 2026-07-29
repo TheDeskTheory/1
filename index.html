@@ -26,12 +26,11 @@
     <span class="eyebrow">Art for every corner</span>
     <h1>Small pieces of art<br>for every corner of your day.</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Posters, bookmarks, stickers, and art prints designed in small batches — for the ones who notice the details.</p>
+    <p class="hero-sub">Posters, bookmarks, and stickers designed in small batches — for the ones who notice the details.</p>
     <div class="hero-meta">
       <span class="tag pink">Posters</span>
       <span class="tag blue">Bookmarks</span>
       <span class="tag yellow">Stickers</span>
-      <span class="tag pink">Art Prints</span>
     </div>
     <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
       <a href="shop.html" class="btn">Shop the collection</a>
@@ -92,7 +91,7 @@
     card.className = "product-card";
     card.dataset.cat = p.category;
     card.style.setProperty("--rot", p.rot + "deg");
-    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : p.category === "art-prints" ? "A" : "S";
+    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
     card.innerHTML = `
       <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
         <span class="glyph">${glyph}</span>

@@ -31,7 +31,6 @@
       <button data-filter="posters">Posters</button>
       <button data-filter="bookmarks">Bookmarks</button>
       <button data-filter="stickers">Stickers</button>
-      <button data-filter="art-prints">Art Prints</button>
     </div>
   </div>
 </section>
@@ -59,7 +58,7 @@
     card.className = "product-card";
     card.dataset.cat = p.category;
     card.style.setProperty("--rot", p.rot + "deg");
-    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : p.category === "art-prints" ? "A" : "S";
+    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
     card.innerHTML = `
       <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
         <span class="glyph">${glyph}</span>
