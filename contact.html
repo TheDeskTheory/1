@@ -56,13 +56,37 @@
   </div>
 </footer>
 
+<script src="config.js"></script>
 <script src="products.js"></script>
 <script src="cart.js"></script>
 <script>
   document.getElementById("contact-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    document.getElementById("confirm-msg").style.display = "block";
-    e.target.reset();
+
+    const payload = {
+      type: "message",
+      name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      message: document.getElementById("message").value.trim(),
+    };
+
+    const finish = () => {
+      document.getElementById("confirm-msg").style.display = "block";
+      e.target.reset();
+    };
+
+    if (!STORE_CONFIG.sheetWebhookUrl || STORE_CONFIG.sheetWebhookUrl.startsWith("PASTE")) {
+      finish();
+      return;
+    }
+
+    fetch(STORE_CONFIG.sheetWebhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    })
+      .then(finish)
+      .catch(finish);
   });
 </script>
 </body>

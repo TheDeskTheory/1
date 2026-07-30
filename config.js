@@ -11,12 +11,12 @@ const STORE_CONFIG = {
   // Name shown to the customer in the UPI app during payment
   payeeName: "The Desk Theory",
 
-  // WhatsApp number customers use to send payment screenshots.
-  // Format: country code + number, no spaces or symbols, e.g. "919876543210"
-  whatsappNumber: "PASTE_YOUR_WHATSAPP_NUMBER_HERE",
+  // Instagram handle (no @) customers use to send payment screenshots via DM.
+  // e.g. "the.desk.theory"
+  instagramHandle: "the.desk.theory",
 
   // Optional: a Google Apps Script / Sheet webhook URL to log orders.
   // Leave the "PASTE" prefix if you haven't set one up yet — orders will
   // still complete locally without being logged anywhere.
-  sheetWebhookUrl: "PASTE_YOUR_SHEET_WEBHOOK_URL_HERE",
+  sheetWebhookUrl: "https://script.google.com/macros/s/AKfycbw4UfkOCQnhVjyhN6Ge4kpINgpcumZ_uOzeC9BnDd5vOE5bdUScUduMSNAMxPOUMrbf/exec",
 };
