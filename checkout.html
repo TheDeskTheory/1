@@ -162,13 +162,13 @@
 
   function renderConfirmation(orderId, total) {
     const upiReady = STORE_CONFIG.upiId && !STORE_CONFIG.upiId.startsWith("PASTE");
-    const waReady = STORE_CONFIG.whatsappNumber && !STORE_CONFIG.whatsappNumber.startsWith("PASTE");
+    const igReady = STORE_CONFIG.instagramHandle && !STORE_CONFIG.instagramHandle.startsWith("PASTE");
     const upiLink = upiReady ? buildUpiString(total, "Order " + orderId) : "";
     const qrSrc = upiReady
       ? "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" + encodeURIComponent(upiLink)
       : "";
-    const waLink = waReady
-      ? "https://wa.me/" + STORE_CONFIG.whatsappNumber + "?text=" + encodeURIComponent(`Hi! I just placed order ${orderId} for ₹${total}. Sharing my payment screenshot.`)
+    const igLink = igReady
+      ? "https://ig.me/m/" + STORE_CONFIG.instagramHandle
       : "";
 
     container.innerHTML = `
@@ -189,8 +189,8 @@
           </div>
         `}
 
-        ${waReady ? `
-          <a href="${waLink}" target="_blank" class="btn secondary" style="width:100%; text-align:center; box-sizing:border-box; margin-bottom:12px;">Send payment screenshot on WhatsApp</a>
+        ${igReady ? `
+          <a href="${igLink}" target="_blank" class="btn secondary" style="width:100%; text-align:center; box-sizing:border-box; margin-bottom:12px;">Send payment screenshot on Instagram</a>
         ` : ""}
 
         <a href="shop.html" class="btn secondary" style="width:100%; text-align:center; box-sizing:border-box;">Continue shopping</a>
