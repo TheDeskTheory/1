@@ -183,6 +183,15 @@ nav.main-nav a.active {
   padding: 6px 14px;
   font-size: 0.68rem;
   font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
 }
 
 .tag.pink { background: var(--tan); color: var(--paper); border-color: var(--tan); }
