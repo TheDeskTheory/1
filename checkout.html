@@ -41,7 +41,6 @@
 <script src="products.js"></script>
 <script src="cart.js"></script>
 <script>
-  const shipping = STORE_CONFIG.shipping;
   const container = document.getElementById("checkout-content");
 
   function buildUpiString(amount, note) {
@@ -75,7 +74,7 @@
     if (ids.length === 0) return renderEmpty();
 
     const subtotal = cartTotal();
-    const total = subtotal + shipping;
+    const total = subtotal;
     const itemsSummary = ids.map(id => {
       const p = getProduct(id);
       return p ? `${p.name} x${cart[id]}` : "";

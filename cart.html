@@ -41,8 +41,6 @@
 <script src="products.js"></script>
 <script src="cart.js"></script>
 <script>
-  const shipping = STORE_CONFIG.shipping;
-
   function render() {
     const cart = getCart();
     const ids = Object.keys(cart);
@@ -80,7 +78,7 @@
     });
 
     const subtotal = cartTotal();
-    const total = subtotal + shipping;
+    const total = subtotal;
 
     container.innerHTML = `
       <table class="cart-table">
