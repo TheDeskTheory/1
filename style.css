@@ -537,6 +537,18 @@ input:focus, textarea:focus, select:focus {
   color: rgba(237,228,214,0.6);
 }
 
+.footer-insta {
+  text-decoration: none;
+  color: rgba(237,228,214,0.6);
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.footer-insta:hover {
+  color: var(--tan-dark);
+  border-color: var(--tan-dark);
+}
+
 /* ---------- Utility ---------- */
 
 .center-note {
