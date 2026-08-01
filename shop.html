@@ -25,13 +25,7 @@
   <div class="container">
     <span class="eyebrow">Full catalog</span>
     <h1 style="font-size:clamp(2rem,5vw,3rem);">The Shop</h1>
-    <p style="max-width:480px; margin-top:12px;">Twelve pieces, three formats. Filter below to browse by category.</p>
-    <div class="category-nav" style="margin-top:26px;">
-      <button data-filter="all" class="active">All</button>
-      <button data-filter="posters">Posters</button>
-      <button data-filter="bookmarks">Bookmarks</button>
-      <button data-filter="stickers">Stickers</button>
-    </div>
+    <p style="max-width:480px; margin-top:12px;">Posters, in small batches.</p>
   </div>
 </section>
 
@@ -59,7 +53,7 @@
     card.className = "product-card";
     card.dataset.cat = p.category;
     card.style.setProperty("--rot", p.rot + "deg");
-    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
+    const glyph = "P";
     card.innerHTML = `
       <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
         <span class="glyph">${glyph}</span>
@@ -77,35 +71,12 @@
     return card;
   }
 
-  function draw(filter) {
+  function draw() {
     grid.innerHTML = "";
-    PRODUCTS
-      .filter(p => filter === "all" || p.category === filter)
-      .forEach(p => grid.appendChild(renderCard(p)));
+    PRODUCTS.forEach(p => grid.appendChild(renderCard(p)));
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const requestedCategory = params.get("category");
-  const validCategories = ["posters", "bookmarks", "stickers"];
-  const initialFilter = validCategories.includes(requestedCategory) ? requestedCategory : "all";
-
-  draw(initialFilter);
-
-  document.querySelectorAll(".category-nav button").forEach(btn => {
-    if (btn.dataset.filter === initialFilter) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
-
-  document.querySelectorAll(".category-nav button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".category-nav button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      draw(btn.dataset.filter);
-    });
-  });
+  draw();
 
   document.addEventListener("click", (e) => {
     if (e.target.dataset && e.target.dataset.add) {

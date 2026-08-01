@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Desk Theory — Posters, Bookmarks & Stickers</title>
+<title>The Desk Theory — Posters</title>
 <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
@@ -26,11 +26,9 @@
     <span class="eyebrow">Art for every corner</span>
     <h1>Small pieces of art<br>for every corner of your day.</h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Posters, bookmarks, and stickers designed in small batches for the ones who notice the details.</p>
+    <p class="hero-sub">Posters designed in small batches for the ones who notice the details.</p>
     <div class="hero-meta">
-      <a href="shop.html?category=posters" class="tag pink">Posters</a>
-      <a href="shop.html?category=bookmarks" class="tag blue">Bookmarks</a>
-      <a href="shop.html?category=stickers" class="tag yellow">Stickers</a>
+      <a href="shop.html" class="tag pink">Posters</a>
     </div>
     <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
       <a href="shop.html" class="btn">Shop the collection</a>
@@ -64,7 +62,7 @@
     </div>
     <div class="value-block">
       <h3>Made to last</h3>
-      <p>Weatherproof stickers, matte-laminate bookmarks, archival poster stock.</p>
+      <p>Archival poster stock built to hold its color for years.</p>
     </div>
   </div>
 </section>
@@ -80,7 +78,7 @@
 <script src="products.js"></script>
 <script src="cart.js"></script>
 <script>
-  const featuredIds = ["p4", "p1", "p9", "p6"];
+  const featuredIds = ["p4", "p1", "p3", "p2"];
   const grid = document.getElementById("featured-grid");
   featuredIds.forEach(id => {
     const p = getProduct(id);
@@ -92,7 +90,7 @@
     card.className = "product-card";
     card.dataset.cat = p.category;
     card.style.setProperty("--rot", p.rot + "deg");
-    const glyph = p.category === "posters" ? "P" : p.category === "bookmarks" ? "B" : "S";
+    const glyph = "P";
     card.innerHTML = `
       <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
         <span class="glyph">${glyph}</span>
