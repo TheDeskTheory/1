@@ -58,13 +58,17 @@
       : `<span class="glyph">P</span>`;
     const artBg = p.image ? "none" : `linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})`;
     card.innerHTML = `
-      <div class="sticker-art" style="background: ${artBg};">
-        ${artInner}
-        <div class="peel"></div>
-      </div>
-      <div class="product-info">
-        <h3>${p.name}</h3>
-        <p class="desc">${p.desc}</p>
+      <a href="product.html?id=${p.id}" style="text-decoration:none; color:inherit;">
+        <div class="sticker-art" style="background: ${artBg};">
+          ${artInner}
+          <div class="peel"></div>
+        </div>
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+        </div>
+      </a>
+      <div class="product-info" style="padding-top:0; margin-top:-4px;">
         <div class="product-row">
           <span class="price">₹${p.price}</span>
           <button class="btn small" data-add="${p.id}">Add</button>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster — The Desk Theory</title>
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mark-v2.png" alt="The Desk Theory"><span class="logo-word">The Desk Theory</span></a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="section" style="padding-top:50px;">
+  <div class="container">
+    <div id="breadcrumb" style="margin-bottom:24px; font-size:0.75rem; opacity:0.65;"></div>
+    <div id="product-detail"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">You might also like</span>
+        <h2 style="font-size:1.6rem;">More posters</h2>
+      </div>
+    </div>
+    <div class="grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 The Desk Theory</span>
+    <a href="https://www.instagram.com/the.desk.theory/" target="_blank" rel="noopener" class="footer-insta">Follow us on Instagram</a>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  const product = getProduct(id);
+
+  const detailEl = document.getElementById("product-detail");
+  const breadcrumbEl = document.getElementById("breadcrumb");
+
+  function renderNotFound() {
+    detailEl.innerHTML = `
+      <div class="empty-cart">
+        <p style="font-size:1.1rem; font-weight:700;">Poster not found.</p>
+        <p class="center-note" style="margin:8px 0 22px;">It may have been removed or the link is incorrect.</p>
+        <a href="shop.html" class="btn">Back to shop</a>
+      </div>`;
+  }
+
+  function renderProduct(p) {
+    document.title = p.name + " — The Desk Theory";
+    breadcrumbEl.innerHTML = `<a href="shop.html" style="text-decoration:underline;">Shop</a> / ${p.name}`;
+
+    const artInner = p.image
+      ? `<img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">`
+      : `<span class="glyph" style="font-size:4rem;">P</span>`;
+    const artBg = p.image ? "none" : `linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})`;
+
+    detailEl.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:50px; align-items:start;">
+        <div class="sticker-art" style="background:${artBg}; aspect-ratio:1/1; border-radius:14px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+          ${artInner}
+        </div>
+        <div>
+          <span class="eyebrow">${p.category}</span>
+          <h1 style="font-size:clamp(1.8rem,4vw,2.6rem); margin-top:6px;">${p.name}</h1>
+          <p class="price" style="font-size:1.3rem; margin-top:14px; display:block;">₹${p.price}</p>
+          <p style="margin-top:20px; max-width:440px; color:rgba(237,228,214,0.75);">${p.desc}</p>
+          <div style="margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;">
+            <button class="btn" id="add-btn" data-add="${p.id}">Add to cart</button>
+            <a href="shop.html" class="btn secondary">Continue browsing</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function cardHTML(p) {
+    const artInner = p.image
+      ? `<img src="${p.image}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">`
+      : `<span class="glyph">P</span>`;
+    const artBg = p.image ? "none" : `linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})`;
+    return `
+      <a href="product.html?id=${p.id}" class="product-card" style="--rot:${p.rot}deg; text-decoration:none; color:inherit;">
+        <div class="sticker-art" style="background:${artBg};">
+          ${artInner}
+          <div class="peel"></div>
+        </div>
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+          <div class="product-row">
+            <span class="price">₹${p.price}</span>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  function renderRelated(currentId) {
+    const relatedGrid = document.getElementById("related-grid");
+    const others = PRODUCTS.filter(p => p.id !== currentId).slice(0, 4);
+    relatedGrid.innerHTML = others.map(cardHTML).join("");
+  }
+
+  if (!product) {
+    renderNotFound();
+  } else {
+    renderProduct(product);
+    renderRelated(product.id);
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.target.dataset && e.target.dataset.add) {
+      addToCart(e.target.dataset.add);
+      e.target.textContent = "Added";
+      setTimeout(() => (e.target.textContent = "Add to cart"), 900);
+    }
+  });
+</script>
+</body>
+</html>
