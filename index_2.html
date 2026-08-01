@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Desk Theory — Posters</title>
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="logo-mark-v2.png" alt="The Desk Theory"><span class="logo-word">The Desk Theory</span></a>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html" class="cart-link">Cart <span class="cart-badge">0</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Art for every corner</span>
+    <h1>Small pieces of art<br>for every corner of your day.</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Posters designed in small batches for the ones who notice the details.</p>
+    <div style="margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="shop.html" class="btn">Shop the collection</a>
+      <a href="about.html" class="btn secondary">Our story</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Fresh off the press</span>
+        <h2>Featured pieces</h2>
+      </div>
+      <a href="shop.html" class="btn small">View all</a>
+    </div>
+    <div class="grid" id="featured-grid"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container values-grid">
+    <div class="value-block">
+      <h3>Small batches</h3>
+      <p>Every design is run in limited quantities — once it's gone, it's gone.</p>
+    </div>
+    <div class="value-block">
+      <h3>Riso-inspired color</h3>
+      <p>Layered duotone prints for texture you won't get from a laser printer.</p>
+    </div>
+    <div class="value-block">
+      <h3>Made to last</h3>
+      <p>Archival poster stock built to hold its color for years.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; width:100%;">
+    <span>&copy; 2026 The Desk Theory</span>
+    <a href="https://www.instagram.com/the.desk.theory/" target="_blank" rel="noopener" class="footer-insta">Follow us on Instagram</a>
+    <span>Made for our BBA group assignment</span>
+  </div>
+</footer>
+
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script>
+  const featuredIds = ["p4", "p1", "p3", "p2"];
+  const grid = document.getElementById("featured-grid");
+  featuredIds.forEach(id => {
+    const p = getProduct(id);
+    grid.appendChild(renderCard(p));
+  });
+
+  function renderCard(p) {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.dataset.cat = p.category;
+    card.style.setProperty("--rot", p.rot + "deg");
+    const glyph = "P";
+    card.innerHTML = `
+      <div class="sticker-art" style="background: linear-gradient(135deg, ${p.colors[0]}, ${p.colors[1]})">
+        <span class="glyph">${glyph}</span>
+        <div class="peel"></div>
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="product-row">
+          <span class="price">₹${p.price}</span>
+          <button class="btn small" data-add="${p.id}">Add</button>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.target.dataset && e.target.dataset.add) {
+      addToCart(e.target.dataset.add);
+      e.target.textContent = "Added";
+      setTimeout(() => (e.target.textContent = "Add"), 900);
+    }
+  });
+</script>
+</body>
+</html>
