@@ -23,7 +23,7 @@ const PRODUCTS = [
   { id: "p25", name: "Cigarette After Tax", category: "posters", price: 149, image: "posters/poster-21.jpg", desc: "Nirmala Sitharaman Sutta Maarti Hui", rot: -3 },
   { id: "p26", name: "Absolut", category: "posters", price: 149, image: "posters/poster-22.jpg", desc: "Original Spirit", rot: -2 },
   { id: "p27", name: "Hitman", category: "posters", price: 149, image: "posters/poster-23.jpg", desc: "Rohit Sharma", rot: -1 },
-  { id: "p28", name: "Log Kya Kahenge", category: "posters", price: 149, image: "posters/poster-24.jpg", desc: "Smoke & Silence", rot: 1 },
+  { id: "p28", name: "Log Kya Kahenge", category: "posters", price: 149, image: "posters/poster-24.jpg", desc: "Smoke & Silence", rot: 1 }
 ];
 
 function getProduct(id) {
