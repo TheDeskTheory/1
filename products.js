@@ -16,7 +16,7 @@ const PRODUCTS = [
   { id: "p18", name: "New York Yankees", category: "posters", price: 149, image: "posters/poster-14.jpg", desc: "Classic Icons", rot: -2 },
   { id: "p19", name: "Porsche 911", category: "posters", price: 149, image: "posters/poster-15.jpg", desc: "Turbo Legacy", rot: -1 },
   { id: "p20", name: "Mercedes-AMG", category: "posters", price: 149, image: "posters/poster-16.jpg", desc: "Night Racing", rot: 1 },
-  { id: "p21", name: "VENI VIDI VICI", category: "posters", price: 149, image: "posters/poster-17.jpg", desc: "I Came I Saw I Conquered", rot: 2 },
+  { id: "p21", name: "VENI VIDI VICI", category: "posters", price: 149, image: "posters/poster-17.jpg", desc: "I Came, I Saw, I Conquered", rot: 2 },
   { id: "p22", name: "Porsche 911", category: "posters", price: 149, image: "posters/poster-18.jpg", desc: "Timeless Icon", rot: 3 },
   { id: "p23", name: "Victory Lap", category: "posters", price: 149, image: "posters/poster-19.jpg", desc: "Kimi Antonelli", rot: 4 },
   { id: "p24", name: "Spider-Man", category: "posters", price: 149, image: "posters/poster-20.jpg", desc: "City Crawler", rot: -4 },
